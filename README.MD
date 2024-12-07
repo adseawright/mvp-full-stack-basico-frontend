@@ -2,7 +2,7 @@
 
 ## Overview
 
-Este documento fornece uma visão geral do frontend do projeto **MVP FULL STACK BASICO**. Este projeto visa ilustrar a criação de uma aplicação web responsiva e interativa para gerenciamento de materiais, cálculo de lucro e ensino de conceitos financeiros básicos para crianças, promovendo empreendedorismo infantil.
+Este documento fornece uma visão geral do frontend do projeto **MVP FULL STACK BÁSICO**. Esse projeto é uma continuação do projeto apresentado na disciplina de [Arquitetura de Software](https://github.com/adseawright/software_architecture_mvp_main), onde criei uma loja online para crianças venderem seus produtos ou serviços na vizinhança local. Nesse projeto, elas podem fazer o cálculo de gastos de materiais, projeção de lucro (bruto e líquido), além de introduzir o conceito de imposto. O objetivo do projeto é ensinar conceitos financeiros básicos para crianças e promover o empreendedorismo infantil.
 
 ## Demonstração
 **Clique na imagem abaixo** para assistir ao vídeo de demonstração da aplicação no YouTube:
@@ -24,7 +24,13 @@ frontend/
 
 Para executar o frontend do projeto, siga os seguintes passos:
 
-1. Execute o backend para que o frontend consiga se comunicar com a API.
+1. Baixe e execute o [backend](https://github.com/adseawright/mvp-full-stack-basico-backend) para que o frontend consiga se comunicar com a API.
+    A estrutura do diretorio deve ser organizada da seguinte maneira:
+    ```
+    Calculadora-de-lucro
+      |- backend/
+      |- frontend/
+    ```
 2. Abra o arquivo **index.html** diretamente no navegador. Isso abrirá a página da aplicação e permitirá utilizar todas as funcionalidades.
 
 ## Funcionalidades do Frontend
@@ -32,7 +38,7 @@ Para executar o frontend do projeto, siga os seguintes passos:
 O frontend é dividido em quatro telas principais:
 
 1. **Tela de Materiais**: Permite adicionar materiais utilizados na produção, com nome, quantidade, custo total e unidade de medida. Também é possível editar ou deletar materiais.
-2. **Tela de Impostos**: Permite inserir o valor do imposto pago para o cálculo total de custos (se aplicavel).
+2. **Tela de Impostos**: Permite inserir o valor do imposto pago para o cálculo total de custos (se aplicável).
 3. **Tela de Cálculo de Ganhos**: Ajuda a calcular o lucro baseado na quantidade produzida e no valor que deseja ganhar por unidade.
 4. **Tela de Resumo de Custos e Ganhos**: Mostra o resumo dos custos totais, incluindo impostos, e calcula o lucro obtido com base nas informações inseridas.
 
@@ -62,7 +68,3 @@ O frontend se comunica com o backend para as seguintes operações:
 - **Obter Lista de Materiais**: Requisição `GET` para obter todos os materiais cadastrados.
 - **Salvar Imposto**: Requisição `POST` para atualizar o valor do imposto.
 - **Calcular Ganhos**: Usa os dados de materiais e impostos armazenados no backend para calcular os ganhos e fornecer um resumo.
-
-## Observação Importante
-
-Este projeto é uma continuação do projeto apresentado na disciplina de **Arquitetura de Software**, onde foi desenvolvida uma ferramenta para crianças criarem uma loja online para venderem produtos ou serviços na vizinhança. O objetivo deste projeto é fomentar o **empreendedorismo** e a **educação financeira** nas crianças. Este módulo implementado no full stack básico é focado para as crianças aprenderem os conceitos de **gasto**, **receita**, **imposto** e **lucro**.
