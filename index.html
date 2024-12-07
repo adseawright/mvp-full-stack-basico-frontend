@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JrMarket - Calculadora de Lucro</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>JrMarket - Calculadora de Lucro</h1>
+  </header>
+
+  <div class="progress-indicator" role="progressbar" aria-label="Indicador de Progresso">
+    <span id="step-1" class="active" aria-label="Etapa 1"></span>
+    <span id="step-2" aria-label="Etapa 2"></span>
+    <span id="step-3" aria-label="Etapa 3"></span>
+    <span id="step-4" aria-label="Etapa 4"></span>
+  </div>
+
+  <!-- Tela 1: Materiais -->
+  <section id="materiais-section" class="screen" style="display: block;">
+    <h2>Tela 1: Materiais</h2>
+    <form id="materialForm" onsubmit="addMaterial(event)" aria-labelledby="form-materiais">
+      <div class="form-group">
+        <label for="nome">Nome do Item</label>
+        <input type="text" id="nome" placeholder="Nome do item" required class="input-field">
+        
+        <label for="quantidade">Quantidade</label>
+        <input type="number" step="0.01" id="quantidade" placeholder="Quantidade (ex: 1.5)" class="input-field" required min="0.01">
+        
+        <label for="unidade">Unidade de Medida</label>
+        <select id="unidade" required class="input-field"></select>
+        
+        <label for="custo_total">Custo Total</label>
+        <input type="number" step="0.01" id="custo_total" placeholder="Custo total (ex: 5.00)" required class="input-field" min="0.01">
+        
+        <button type="submit" class="submit-button" aria-label="Adicionar material">Adicionar Item</button>
+      </div>
+    </form>
+    <ul id="materialList" class="material-list" aria-live="polite">
+      <li class="material-item">
+        <div class="item-details">
+          <span>Acucar 1 Kg $12</span>
+          <div class="edit-delete-buttons">
+            <button class="edit-button" onclick="editarMaterial(this)">Editar</button>
+            <button class="delete-button" onclick="deletarMaterial(this)">Deletar</button>
+          </div>
+        </div>
+        <div class="edit-fields" style="display: none;">
+          <input type="text" id="edit-nome-${material.id}" value="Acucar" class="input-field">
+          
+          <!-- Contêiner para quantidade e unidade -->
+          <div class="quantidade-unidade-container">
+            <input type="number" id="edit-quantidade-${material.id}" value="1" class="input-field">
+            <select id="edit-unidade-${material.id}" class="input-field">
+              <option>Kg</option>
+            </select>
+          </div>
+      
+          <input type="number" id="edit-custo-${material.id}" value="12" class="input-field">
+          <div class="edit-buttons">
+            <button class="save-button" onclick="salvarEdicao(${material.id})">Salvar</button>
+            <button class="cancel-button" onclick="cancelarEdicao(${material.id})">Cancelar</button>
+          </div>
+        </div>        
+      </li>      
+    </ul>
+    <button type="button" id="next-to-imposto" class="next-button" aria-label="Ir para a próxima seção: Impostos">Próximo: Impostos</button>
+  </section>
+
+  <!-- Tela 2: Imposto -->
+  <section id="imposto-section" class="screen" style="display: none;">
+    <h2>Tela 2: Impostos</h2>
+    <p class="info-text">Os impostos são valores que pagamos para ajudar nosso país. Eles ajudam em coisas importantes, como escolas e hospitais.</p>
+    <form id="impostoForm" aria-labelledby="form-imposto">
+      <div class="form-group">
+        <label for="imposto">Total de Impostos Pagos:</label>
+        <input type="number" step="0.01" id="imposto" placeholder="Valor do imposto (ex: 1.00)" class="input-field" min="0" aria-required="true">
+        <button type="button" id="save-imposto" class="submit-button" aria-label="Salvar valor de imposto">Salvar Imposto</button>
+      </div>
+    </form>
+    <button type="button" id="next-to-lucro" class="next-button" aria-label="Ir para a próxima seção: Cálculo de Ganhos">Próximo: Cálculo de Ganhos</button>
+    <button type="button" id="back-to-materiais" class="back-button" aria-label="Voltar para a seção anterior: Materiais">Voltar</button>
+  </section>
+
+  <!-- Tela 3: Cálculo de Ganhos -->
+  <section id="lucro-section" class="screen" style="display: none;">
+    <h2>Tela 3: Cálculo de Ganhos</h2>
+    <div class="form-group">
+      <label for="rendimento">Quantas unidades você conseguiu produzir?</label>
+      <input type="number" id="rendimento" placeholder="Unidades produzidas (ex: 10)" class="input-field" required min="1" aria-required="true">
+    </div>
+    <div class="form-group">
+      <label for="lucro">Quanto você gostaria de ganhar por unidade? (ex: mais 1 dólar)</label>
+      <input type="number" step="0.01" id="lucro" placeholder="Ganho desejado por unidade (ex: 1.00)" class="input-field" required min="0.01" aria-required="true">
+    </div>
+    <button type="button" id="calculate-and-next" class="submit-button" aria-label="Calcular ganhos e ir para a próxima seção">Calcular e Próximo: Resumo de Custos e Ganhos</button>
+    <button type="button" id="back-to-imposto" class="back-button" aria-label="Voltar para a seção anterior: Impostos">Voltar</button>
+  </section>
+
+<!-- Tela 4: Resumo de Custos e Ganhos -->
+<section id="resumo-section" class="screen" style="display: none;">
+  <h2>Tela 4: Resumo de Custos e Ganhos</h2>
+  <div class="summary-container">
+    
+    <div class="summary-box summary-cost">
+      <h4 class="section-heading">Resumo de Custos</h4>
+      <div id="material-summary"></div> <!-- Adicionei esta linha para o container do resumo dos materiais -->
+
+      <p>Materiais custaram: $<span id="total_gasto">0.00</span></p>
+      <p>Imposto pago: $<span id="imposto_pago">0.00</span></p>
+      <p>---------------------------</p>
+      <p class="highlight-gasto">Materiais + Imposto: $<span id="total_com_taxa">0.00</span></p>
+      <p>Gasto por unidade: $<span id="custo_por_unidade">0.00</span></p>
+    </div>
+    <div class="summary-box summary-profit">
+      <h4 class="section-heading">Resumo de Ganhos</h4>
+      <p>Receita Total (Dinheiro Ganho): $<span id="revenue_total">0.00</span></p>
+      <p>Preço de venda por unidade: $<span id="preco_venda">0.00</span></p>
+      <p>Ganho por unidade: $<span id="lucro_por_unidade">0.00</span></p>
+      <p class="highlight-lucro">Lucro Final: $<span id="lucro_total">0.00</span></p>
+    </div>
+  </div>
+  <button type="button" id="back-to-lucro" class="back-button" aria-label="Voltar para a seção anterior: Cálculo de Ganhos">Voltar</button>
+</section>
+
+  <!-- Feedback Message -->
+  <div id="feedback" class="feedback-message" style="display: none;" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+
+</body>
+</html>
