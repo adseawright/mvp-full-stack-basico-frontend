@@ -4,6 +4,11 @@
 
 Este documento fornece uma visão geral do frontend do projeto **MVP FULL STACK BASICO**. Este projeto visa ilustrar a criação de uma aplicação web responsiva e interativa para gerenciamento de materiais, cálculo de lucro e ensino de conceitos financeiros básicos para crianças, promovendo empreendedorismo infantil.
 
+## Demonstração
+**Clique na imagem abaixo** para assistir ao vídeo de demonstração da aplicação no YouTube:
+
+[![MVP-FULL-STACK-BASICO](https://img.youtube.com/vi/UnpUz1-8npI/maxresdefault.jpg)](https://youtu.be/UnpUz1-8npI)
+
 ## Estrutura do Projeto
 
 O frontend está organizado da seguinte maneira:
